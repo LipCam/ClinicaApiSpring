@@ -22,19 +22,19 @@ public class MedicosService {
         return _repository.findAll().stream().map(x -> new MedicosDTO(x)).toList();
     }
 
-    public MedicosDTO GetById(Long Id) {
+    public MedicosDTO findById(Long Id) {
         Medicos entity = _repository.findById(Id).orElse(null);
         if (entity != null)
             return new MedicosDTO(entity);
         return null;
     }
 
-    public MedicosDTO Add(AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
+    public MedicosDTO add(AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
         Medicos entity = _repository.save(new Medicos(addEditMedicoRequestDTO.getNome(), addEditMedicoRequestDTO.getCPF(), addEditMedicoRequestDTO.getNumRegistro()));
         return new MedicosDTO(entity);
     }
 
-    public ResponseDTO Edit(Long Id, AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
+    public ResponseDTO edit(Long Id, AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
         Medicos entity = _repository.findById(Id).orElse(null);
 
         if(entity != null){
@@ -47,7 +47,7 @@ public class MedicosService {
         return new ResponseDTO("Erro", "Registro inexistente");
     }
 
-    public ResponseDTO Delete(Long Id) {
+    public ResponseDTO delete(Long Id) {
         Medicos entity = _repository.findById(Id).orElse(null);
 
         if(entity != null) {

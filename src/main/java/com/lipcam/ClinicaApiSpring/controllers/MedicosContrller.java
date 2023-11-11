@@ -22,8 +22,8 @@ public class MedicosContrller {
     }
 
     @GetMapping(value = "/{Id}")
-    public ResponseEntity GetById(@PathVariable Long Id) {
-        MedicosDTO medicosDTO = _service.GetById(Id);
+    public ResponseEntity findById(@PathVariable Long Id) {
+        MedicosDTO medicosDTO = _service.findById(Id);
         if (medicosDTO != null)
             return ResponseEntity.status(HttpStatus.OK).body(medicosDTO);
 
@@ -41,7 +41,7 @@ public class MedicosContrller {
         if (addEditMedicoRequestDTO.getNumRegistro().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo Número Registro deve ser preenchido"));
 
-        MedicosDTO medicosDTO = _service.Add(addEditMedicoRequestDTO);
+        MedicosDTO medicosDTO = _service.add(addEditMedicoRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(medicosDTO);
     }
@@ -58,7 +58,7 @@ public class MedicosContrller {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo Número Registro deve ser preenchido"));
 
         System.out.println(Id);
-        ResponseDTO responseDTO = _service.Edit(Id, addEditMedicoRequestDTO);
+        ResponseDTO responseDTO = _service.edit(Id, addEditMedicoRequestDTO);
 
         if (responseDTO.getResult().equals("OK"))
             return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
@@ -67,8 +67,8 @@ public class MedicosContrller {
     }
 
     @DeleteMapping(value = "/{Id}")
-    public ResponseEntity deleteMedico(@PathVariable Long Id) {
-        ResponseDTO responseDTO = _service.Delete(Id);
+    public ResponseEntity delete(@PathVariable Long Id) {
+        ResponseDTO responseDTO = _service.delete(Id);
 
         if (responseDTO.getResult().equals("OK"))
             return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
