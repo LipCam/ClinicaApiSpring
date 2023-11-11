@@ -33,12 +33,12 @@ public class PacientesService {
     }
 
 
-    public ResponseDTO edit(Long id, AddEditPacienteRequestDTO addEditPacienteRequestDTO) {
+    public ResponseDTO edit(Long id, AddEditPacienteRequestDTO addEditRequestDTO) {
         Pacientes entity = _repository.findById(id).orElse(null);
         if (entity != null) {
-            entity.setNOME_STR(addEditPacienteRequestDTO.getNome());
-            entity.setCPF_STR(addEditPacienteRequestDTO.getCPF());
-            entity.setCELULAR_STR(addEditPacienteRequestDTO.getCelular());
+            entity.setNOME_STR(addEditRequestDTO.getNome());
+            entity.setCPF_STR(addEditRequestDTO.getCPF());
+            entity.setCELULAR_STR(addEditRequestDTO.getCelular());
             _repository.save(entity);
             return new ResponseDTO("OK", "Edição realizada com sucesso");
         }
