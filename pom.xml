@@ -12,7 +12,7 @@
 	<artifactId>ClinicaApiSpring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ClinicaApiSpring</name>
-	<description>Demo project for Spring Boot</description>
+	<description></description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -46,6 +46,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
