@@ -21,44 +21,42 @@ public class MedicosContrller {
         return ResponseEntity.status(HttpStatus.OK).body(_service.findAll());
     }
 
-    @GetMapping(value = "/{Id}")
-    public ResponseEntity findById(@PathVariable Long Id) {
-        MedicosDTO medicosDTO = _service.findById(Id);
-        if (medicosDTO != null)
-            return ResponseEntity.status(HttpStatus.OK).body(medicosDTO);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity findById(@PathVariable Long id) {
+        MedicosDTO dto = _service.findById(id);
+        if (dto != null)
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Registro não encontrado"));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Registro inexistente"));
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
-        if (addEditMedicoRequestDTO.getNome().isEmpty())
+    public ResponseEntity add(@RequestBody AddEditMedicoRequestDTO addEditRequestDTO) {
+        if (addEditRequestDTO.getNome().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo Nome deve ser preenchido"));
 
-        if (addEditMedicoRequestDTO.getCPF().isEmpty())
+        if (addEditRequestDTO.getCPF().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo CPF deve ser preenchido"));
 
-        if (addEditMedicoRequestDTO.getNumRegistro().isEmpty())
+        if (addEditRequestDTO.getNumRegistro().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo Número Registro deve ser preenchido"));
 
-        MedicosDTO medicosDTO = _service.add(addEditMedicoRequestDTO);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(medicosDTO);
+        MedicosDTO dto = _service.add(addEditRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
-    @PutMapping(value = "/{Id}")
-    public ResponseEntity edit(@PathVariable Long Id, @RequestBody AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
-        if (addEditMedicoRequestDTO.getNome().isEmpty())
+    @PutMapping(value = "/{id}")
+    public ResponseEntity edit(@PathVariable Long id, @RequestBody AddEditMedicoRequestDTO addEditRequestDTO) {
+        if (addEditRequestDTO.getNome().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo Nome deve ser preenchido"));
 
-        if (addEditMedicoRequestDTO.getCPF().isEmpty())
+        if (addEditRequestDTO.getCPF().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo CPF deve ser preenchido"));
 
-        if (addEditMedicoRequestDTO.getNumRegistro().isEmpty())
+        if (addEditRequestDTO.getNumRegistro().isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO("Erro", "Campo Número Registro deve ser preenchido"));
 
-        System.out.println(Id);
-        ResponseDTO responseDTO = _service.edit(Id, addEditMedicoRequestDTO);
+        ResponseDTO responseDTO = _service.edit(id, addEditRequestDTO);
 
         if (responseDTO.getResult().equals("OK"))
             return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
@@ -66,9 +64,9 @@ public class MedicosContrller {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
 
-    @DeleteMapping(value = "/{Id}")
-    public ResponseEntity delete(@PathVariable Long Id) {
-        ResponseDTO responseDTO = _service.delete(Id);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        ResponseDTO responseDTO = _service.delete(id);
 
         if (responseDTO.getResult().equals("OK"))
             return ResponseEntity.status(HttpStatus.OK).body(responseDTO);

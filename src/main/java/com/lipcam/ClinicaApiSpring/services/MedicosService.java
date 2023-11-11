@@ -22,33 +22,33 @@ public class MedicosService {
         return _repository.findAll().stream().map(x -> new MedicosDTO(x)).toList();
     }
 
-    public MedicosDTO findById(Long Id) {
-        Medicos entity = _repository.findById(Id).orElse(null);
+    public MedicosDTO findById(Long id) {
+        Medicos entity = _repository.findById(id).orElse(null);
         if (entity != null)
             return new MedicosDTO(entity);
         return null;
     }
 
-    public MedicosDTO add(AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
-        Medicos entity = _repository.save(new Medicos(addEditMedicoRequestDTO.getNome(), addEditMedicoRequestDTO.getCPF(), addEditMedicoRequestDTO.getNumRegistro()));
+    public MedicosDTO add(AddEditMedicoRequestDTO addEditRequestDTO) {
+        Medicos entity = _repository.save(new Medicos(addEditRequestDTO.getNome(), addEditRequestDTO.getCPF(), addEditRequestDTO.getNumRegistro()));
         return new MedicosDTO(entity);
     }
 
-    public ResponseDTO edit(Long Id, AddEditMedicoRequestDTO addEditMedicoRequestDTO) {
+    public ResponseDTO edit(Long Id, AddEditMedicoRequestDTO addEditRequestDTO) {
         Medicos entity = _repository.findById(Id).orElse(null);
 
         if(entity != null){
-            entity.setNOME_STR(addEditMedicoRequestDTO.getNome());
-            entity.setCPF_STR(addEditMedicoRequestDTO.getCPF());
-            entity.setNUM_REGISTRO_STR(addEditMedicoRequestDTO.getNumRegistro());
+            entity.setNOME_STR(addEditRequestDTO.getNome());
+            entity.setCPF_STR(addEditRequestDTO.getCPF());
+            entity.setNUM_REGISTRO_STR(addEditRequestDTO.getNumRegistro());
             _repository.save(entity);
             return new ResponseDTO("OK", "Edição realizada com sucesso");
         }
         return new ResponseDTO("Erro", "Registro inexistente");
     }
 
-    public ResponseDTO delete(Long Id) {
-        Medicos entity = _repository.findById(Id).orElse(null);
+    public ResponseDTO delete(Long id) {
+        Medicos entity = _repository.findById(id).orElse(null);
 
         if(entity != null) {
             _repository.delete(entity);
