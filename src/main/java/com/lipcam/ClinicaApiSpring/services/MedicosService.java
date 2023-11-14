@@ -22,6 +22,7 @@ public class MedicosService {
         return _repository.findAll().stream().map(x -> new MedicosDTO(x)).toList();
     }
 
+    @Transactional(readOnly = true)
     public MedicosDTO findById(Long id) {
         Medicos entity = _repository.findById(id).orElse(null);
         if (entity != null)
@@ -29,11 +30,13 @@ public class MedicosService {
         return null;
     }
 
+    @Transactional(readOnly = true)
     public MedicosDTO add(AddEditMedicoRequestDTO addEditRequestDTO) {
         Medicos entity = _repository.save(new Medicos(addEditRequestDTO.getNome(), addEditRequestDTO.getCPF(), addEditRequestDTO.getNumRegistro()));
         return new MedicosDTO(entity);
     }
 
+    @Transactional(readOnly = true)
     public ResponseDTO edit(Long Id, AddEditMedicoRequestDTO addEditRequestDTO) {
         Medicos entity = _repository.findById(Id).orElse(null);
 
@@ -47,6 +50,7 @@ public class MedicosService {
         return new ResponseDTO("Erro", "Registro inexistente");
     }
 
+    @Transactional(readOnly = true)
     public ResponseDTO delete(Long id) {
         Medicos entity = _repository.findById(id).orElse(null);
 

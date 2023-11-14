@@ -7,6 +7,7 @@ import com.lipcam.ClinicaApiSpring.entities.Pacientes;
 import com.lipcam.ClinicaApiSpring.repositories.PacientesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ public class PacientesService {
     @Autowired
     PacientesRepository _repository;
 
+    @Transactional(readOnly = true)
     public List<PacientesDTO> findAll() {
         return _repository.findAll().stream().map(x -> new PacientesDTO(x)).toList();
     }
 
+    @Transactional(readOnly = true)
     public PacientesDTO findById(Long Id) {
         Pacientes entity = _repository.findById(Id).orElse(null);
         if (entity != null)
@@ -27,12 +30,13 @@ public class PacientesService {
         return null;
     }
 
+    @Transactional(readOnly = true)
     public PacientesDTO add(AddEditPacienteRequestDTO addEditRequestDTO) {
         Pacientes entity = _repository.save(new Pacientes(addEditRequestDTO.getNome(), addEditRequestDTO.getCPF(), addEditRequestDTO.getCelular()));
         return new PacientesDTO(entity);
     }
 
-
+    @Transactional(readOnly = true)
     public ResponseDTO edit(Long id, AddEditPacienteRequestDTO addEditRequestDTO) {
         Pacientes entity = _repository.findById(id).orElse(null);
         if (entity != null) {
@@ -46,6 +50,7 @@ public class PacientesService {
         return new ResponseDTO("Erro", "Registro inexistente");
     }
 
+    @Transactional(readOnly = true)
     public  ResponseDTO delete(Long id)
     {
         Pacientes entity = _repository.findById(id).orElse(null);
