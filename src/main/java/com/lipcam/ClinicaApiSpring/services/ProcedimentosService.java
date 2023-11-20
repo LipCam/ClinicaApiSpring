@@ -30,13 +30,13 @@ public class ProcedimentosService {
         return null;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ProcedimentosDTO add(AddEditProcedimentoRequestDTO addEditRequestDTO) {
         Procedimentos entity = _repository.save(new Procedimentos(addEditRequestDTO.getDescricao(), addEditRequestDTO.getValor()));
         return new ProcedimentosDTO(entity);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ResponseDTO edit(Long id, AddEditProcedimentoRequestDTO addEditRequestDTO) {
         Procedimentos entity = _repository.findById(id).orElse(null);
         if (entity != null) {
@@ -49,7 +49,7 @@ public class ProcedimentosService {
         return new ResponseDTO("Erro", "Registro inexistente");
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public  ResponseDTO delete(Long id)
     {
         Procedimentos entity = _repository.findById(id).orElse(null);

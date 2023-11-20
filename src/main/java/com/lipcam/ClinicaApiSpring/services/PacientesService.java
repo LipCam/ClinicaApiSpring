@@ -30,13 +30,13 @@ public class PacientesService {
         return null;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public PacientesDTO add(AddEditPacienteRequestDTO addEditRequestDTO) {
         Pacientes entity = _repository.save(new Pacientes(addEditRequestDTO.getNome(), addEditRequestDTO.getCPF(), addEditRequestDTO.getCelular()));
         return new PacientesDTO(entity);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ResponseDTO edit(Long id, AddEditPacienteRequestDTO addEditRequestDTO) {
         Pacientes entity = _repository.findById(id).orElse(null);
         if (entity != null) {
@@ -50,7 +50,7 @@ public class PacientesService {
         return new ResponseDTO("Erro", "Registro inexistente");
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public  ResponseDTO delete(Long id)
     {
         Pacientes entity = _repository.findById(id).orElse(null);
